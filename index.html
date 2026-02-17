@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUSTARD &amp; MILK &mdash; Nonsense Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="title-link" href="https://www.amazon.com/Mustard-Milk-Van-Sanders/dp/1975851323/ref=sr_1_2?crid=1GRLWRG9XZV14&dib=eyJ2IjoiMSJ9.nma84syK37W6iAhdsoeaZMzN5fnHTGC5t3vUY7T6ILM.dRN8G5YshAKx_vNazwvXvglQWDuTYo8nQFPGE4s-okQ&dib_tag=se&keywords=mustard+%26+milk&qid=1771346438&s=books&sprefix=mustard+%26+milk%2Cstripbooks%2C197&sr=1-2" target="_blank" rel="noopener">MUSTARD &amp; MILK</a>
+  <span class="subtitle">NONSENSE GENERATOR</span>
+</header>
+<hr class="header-sep">
+
+<div class="main">
+
+  <!-- ── Left Panel ─────────────────────────── -->
+  <div class="left-panel">
+    <span class="section-label">STYLE</span>
+    <div class="style-buttons">
+      <div class="style-btn selected" data-style="mixed">
+        <div class="style-name">Mixed Nonsense</div>
+        <div class="style-desc">General Mustard &amp; Milk style</div>
+      </div>
+      <div class="style-btn" data-style="list_rant">
+        <div class="style-name">List Rant</div>
+        <div class="style-desc">"I piss bacon. I eat steel."</div>
+      </div>
+      <div class="style-btn" data-style="question_barrage">
+        <div class="style-name">Question Barrage</div>
+        <div class="style-desc">Rhetorical nonsense questions</div>
+      </div>
+      <div class="style-btn" data-style="character_scene">
+        <div class="style-name">Character Scene</div>
+        <div class="style-desc">Named character micro-narratives</div>
+      </div>
+      <div class="style-btn" data-style="refrain">
+        <div class="style-name">Refrain</div>
+        <div class="style-desc">Build-up with repeated anchors</div>
+      </div>
+    </div>
+
+    <span class="section-label">SAMPLES</span>
+    <div class="count-row">
+      <input type="range" id="countSlider" min="1" max="10" value="3">
+      <span class="count-display" id="countDisplay">3</span>
+    </div>
+
+    <button class="btn-generate" id="btn-generate" disabled>GENERATE</button>
+    <button class="btn-clear" id="btn-clear">CLEAR ALL</button>
+
+    <div class="left-spacer"></div>
+
+    <div class="left-bottom">
+      <button class="btn-about" id="btn-about">ABOUT</button>
+    </div>
+  </div>
+
+  <div class="vsep"></div>
+
+  <!-- ── Right Panel ────────────────────────── -->
+  <div class="right-panel" id="output">
+    <div class="loading">Loading model&hellip;</div>
+  </div>
+
+</div>
+
+<!-- ── Hidden About Content ─────────────────── -->
+<div id="about-content">
+
+  <div class="about-heading">ABOUT MUSTARD &amp; MILK</div>
+
+  <!-- THE BOOK -->
+  <div class="about-subheading">THE BOOK</div>
+  <p class="about-body">"Mustard &amp; Milk" (2017) by Van Sanders is a 100-page work of deliberate nonsense prose. Part fever dream, part linguistic experiment, the book builds a world where meaning is always almost within reach but never quite arrives. Sentences feel like they should make sense. They don't. That's the point.</p>
+
+  <p class="about-quote">"I love nonsense. The kickass sense of baffled bewilderment that smacks you in the face when you encounter it &mdash; it's my main addiction."</p>
+  <p class="about-stat-label">&mdash; Van Sanders, from the preface</p>
+
+  <p class="about-body">The text spans 10 chapters across body parts, food, domestic objects, and profanity &mdash; domains that collide in every paragraph. Characters like Dan, Showercats Dupreme, and Uncle Toadhammer appear just often enough to feel familiar, but never develop. They are character ghosts.</p>
+
+  <p><a class="about-link" href="https://www.amazon.com/Mustard-Milk-Van-Sanders/dp/1975851323/ref=sr_1_2?crid=1GRLWRG9XZV14&dib=eyJ2IjoiMSJ9.nma84syK37W6iAhdsoeaZMzN5fnHTGC5t3vUY7T6ILM.dRN8G5YshAKx_vNazwvXvglQWDuTYo8nQFPGE4s-okQ&dib_tag=se&keywords=mustard+%26+milk&qid=1771346438&s=books&sprefix=mustard+%26+milk%2Cstripbooks%2C197&sr=1-2" target="_blank" rel="noopener">GET THE BOOK ON AMAZON</a></p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- THE GENERATOR -->
+  <div class="about-subheading">THE GENERATOR</div>
+  <p class="about-body">While writing Mustard &amp; Milk, the author imagined that one day it might be possible to build a machine that could generate new nonsense in the same style &mdash; something that captured the patterns buried in the text without understanding them. This generator is that machine.</p>
+  <p class="about-body">It works by analyzing every two-word sequence in the original book and learning what tends to follow. This is called an order-2 Markov chain. The generator doesn't understand language. It understands probability. And it turns out that the probability of nonsense has a very specific shape.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- CORPUS ANALYSIS -->
+  <div class="about-subheading">CORPUS ANALYSIS</div>
+  <p class="about-body">A computational analysis of the full text revealed the hidden architecture of the author's nonsense:</p>
+  <div class="about-stat-row"><span class="about-stat-label">  Total words: </span><span class="about-stat-value">25,536</span></div>
+  <div class="about-stat-row"><span class="about-stat-label">  Unique words: </span><span class="about-stat-value">7,615</span></div>
+  <div class="about-stat-row"><span class="about-stat-label">  Sentences: </span><span class="about-stat-value">2,248</span></div>
+  <div class="about-stat-row"><span class="about-stat-label">  Chapters: </span><span class="about-stat-value">10</span></div>
+
+  <!-- VOCABULARY COMPOSITION -->
+  <div class="about-subheading">VOCABULARY COMPOSITION</div>
+  <div class="about-stat-label">&nbsp; Real English words: 65.2%</div>
+  <div>&nbsp; <span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span></div>
+  <div class="about-stat-label">&nbsp; Invented words / neologisms: 34.8%</div>
+  <p class="about-body">67.7% of all words appear exactly once (hapax legomena). This gives every sentence a feeling of perpetual novelty &mdash; you almost never see the same word twice.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- THE "ALMOST-MEANING" EFFECT -->
+  <div class="about-subheading">THE "ALMOST-MEANING" EFFECT</div>
+  <p class="about-body">The analysis scored every sentence for how close it comes to making sense. The result:</p>
+  <div class="about-stat-row"><span class="about-stat-label">  Mean meaning score: </span><span class="about-stat-value">0.73 / 1.00</span></div>
+  <div>&nbsp; <span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span></div>
+  <p class="about-body">The text skews toward meaning, not away from it. The author maintains just enough coherence for the reader to keep searching for sense. When the brain recognizes all the words but can't resolve their combination, it keeps trying. That's the hook.</p>
+
+  <div class="about-subheading">SWEET SPOT SENTENCES</div>
+  <p class="about-body">The boundary between meaning and nonsense:</p>
+  <p class="about-quote">&ldquo;We wanna bluck the mostrils and place the product on our hot gloss grills.&rdquo;</p>
+  <p class="about-quote">&ldquo;Dang Mullberry, I just wanted to spear you with a boiled bread.&rdquo;</p>
+  <p class="about-quote">&ldquo;Boston wickets can't shake couple's nets any safer with tactical comb suits.&rdquo;</p>
+  <p class="about-quote">&ldquo;Blushing marmosets hurdle a condom display in Jacksonville Amanda.&rdquo;</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- SEMANTIC DOMAINS -->
+  <div class="about-subheading">SEMANTIC DOMAINS</div>
+  <p class="about-body">The author's signature technique is domain collision &mdash; combining body parts with food, domestic objects with violence, emotions with bodily functions:</p>
+
+  <div class="domain-row">
+    <div class="domain-name">Body Parts</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span> <span class="about-stat-label">313</span></div>
+    <div class="domain-examples">mouth, face, head, hair, teeth</div>
+  </div>
+  <div class="domain-row">
+    <div class="domain-name">Domestic Objects</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;</span> <span class="about-stat-label">292</span></div>
+    <div class="domain-examples">home, door, bag, basket, blanket</div>
+  </div>
+  <div class="domain-row">
+    <div class="domain-name">Food &amp; Drink</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;</span> <span class="about-stat-label">286</span></div>
+    <div class="domain-examples">mustard, cheese, meat, corn, beer</div>
+  </div>
+  <div class="domain-row">
+    <div class="domain-name">Texture &amp; Sensation</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span> <span class="about-stat-label">190</span></div>
+    <div class="domain-examples">hot, soft, cold, hard, warm</div>
+  </div>
+  <div class="domain-row">
+    <div class="domain-name">Nature &amp; Elements</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span> <span class="about-stat-label">137</span></div>
+    <div class="domain-examples">sun, wood, fire, wind, wave</div>
+  </div>
+  <div class="domain-row">
+    <div class="domain-name">Animals</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span> <span class="about-stat-label">120</span></div>
+    <div class="domain-examples">dog, cat, fly, magpie, monkeys</div>
+  </div>
+  <div class="domain-row">
+    <div class="domain-name">Emotion &amp; State</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span> <span class="about-stat-label">104</span></div>
+    <div class="domain-examples">love, pain, desire, hope, wonder</div>
+  </div>
+  <div class="domain-row">
+    <div class="domain-name">Profanity &amp; Taboo</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span> <span class="about-stat-label">100</span></div>
+    <div class="domain-examples">the usual suspects</div>
+  </div>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- SENTENCE STRUCTURE -->
+  <div class="about-subheading">SENTENCE STRUCTURE</div>
+  <div class="struct-row">
+    <div class="struct-label">Declarative (85.3%)</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span></div>
+  </div>
+  <div class="struct-row">
+    <div class="struct-label">Exclamation (7.2%)</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;</span></div>
+  </div>
+  <div class="struct-row">
+    <div class="struct-label">Question (6.6%)</div>
+    <div><span class="about-bar-full">&#9608;&#9608;&#9608;</span></div>
+  </div>
+  <div class="struct-row">
+    <div class="struct-label">Trailing (0.9%)</div>
+    <div><span class="about-bar-empty">&#9608;</span></div>
+  </div>
+  <p class="about-body">85% declarative statements give the text an authoritative tone &mdash; as if the nonsense is being stated as fact. The author instinctively presents absurdity with the confidence of truth.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- CHAPTER EVOLUTION -->
+  <div class="about-subheading">CHAPTER EVOLUTION</div>
+  <p class="about-body">Neologism density (% invented words) across chapters:</p>
+  <div class="chapter-row"><span class="chapter-label">Ch 2</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="chapter-pct">24.3%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 3</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;</span><span class="chapter-pct">29.5%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 4</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;</span><span class="chapter-pct">31.6%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 5</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="chapter-pct">26.4%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 6</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="chapter-pct">22.9%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 7</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="chapter-pct">23.2%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 8</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="chapter-pct">24.4%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 9</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="chapter-pct">23.5%</span></div>
+  <div class="chapter-row"><span class="chapter-label">Ch 10</span><span class="about-bar-full">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span class="about-bar-empty">&#9608;&#9608;&#9608;</span><span class="chapter-pct">30.1%</span></div>
+
+  <p class="about-body">Chapter 8 is the magnum opus at 5,457 words &mdash; more than double any other chapter. Chapter 4 is the mantra chapter: "until I get home" repeated 31 times.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- GENERATOR MODEL -->
+  <div class="about-subheading">GENERATOR MODEL</div>
+  <div class="about-stat-row"><span class="about-stat-label">  Chain order: </span><span class="about-stat-value">2</span></div>
+  <div class="about-stat-row"><span class="about-stat-label">  Bigram contexts: </span><span class="about-stat-value">18,806</span></div>
+  <div class="about-stat-row"><span class="about-stat-label">  Sentence starters: </span><span class="about-stat-value">2,315</span></div>
+  <div class="about-stat-row"><span class="about-stat-label">  Generation styles: </span><span class="about-stat-value">5</span></div>
+  <p class="about-body">Every output is new. Nothing is stored or repeated. The generator walks the probability space of the original text, producing sentences the book never contained but could have.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <p><a class="about-link" href="https://www.amazon.com/Mustard-Milk-Van-Sanders/dp/1975851323/ref=sr_1_2?crid=1GRLWRG9XZV14&dib=eyJ2IjoiMSJ9.nma84syK37W6iAhdsoeaZMzN5fnHTGC5t3vUY7T6ILM.dRN8G5YshAKx_vNazwvXvglQWDuTYo8nQFPGE4s-okQ&dib_tag=se&keywords=mustard+%26+milk&qid=1771346438&s=books&sprefix=mustard+%26+milk%2Cstripbooks%2C197&sr=1-2" target="_blank" rel="noopener">GET THE BOOK ON AMAZON</a></p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- PATTERN ANALYSIS -->
+  <div class="about-subheading">PATTERN ANALYSIS</div>
+  <p class="about-body">The author fed the full text of Mustard &amp; Milk through a comprehensive statistical pattern analysis, then sat down with Claude (Anthropic's AI) to interpret the results. What follows is that conversation &mdash; an attempt to see past the shock-imagery and surface absurdity to find out what the numbers reveal about the mind that wrote it.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- CLAUDE'S ANALYSIS -->
+  <div class="chat-speaker">CLAUDE:</div>
+
+  <div class="chat-section">The Architecture of Almost-Meaning</div>
+  <p class="chat-body">The central finding is captured in that mean meaning score of 0.73 &mdash; your book lives in a very deliberate sweet spot. Over half the sentences (51.6%) fall into what the analysis calls the "Sweet Spot" category: partial meaning that keeps the reader's brain grasping. Another 34.7% are "Almost Meaningful" &mdash; mostly coherent. Only about 3% is pure gibberish or syntactic nonsense. This isn't random word vomiting; it's a text that understands English and then systematically corrupts it just enough to create cognitive friction.</p>
+  <p class="chat-body">You're not writing gibberish &mdash; you're writing in a liminal zone where the reader's pattern-matching machinery keeps firing but never quite locks on. That's what makes sentences like "Dang Mullberry, I just wanted to spear you with a boiled bread" compelling in a way that "Agicle mumbosis turforming purdontic vessations" isn't. The first one has familiar rhythms, recognizable intent, even emotional texture. The second one makes the brain give up immediately.</p>
+
+  <div class="chat-section">The Vocabulary Engine</div>
+  <p class="chat-body">The numbers here are striking. 34.8% neologism ratio means roughly one in three unique words is invented &mdash; but the structural scaffolding is standard English function words. Your top 50 words are all common articles, pronouns, prepositions ("the," "a," "to," "and," "of," "I"). That's the trick: the grammatical skeleton is perfectly normal, so the reader's syntactic parser stays engaged even when the content words go sideways.</p>
+  <p class="chat-body">The hapax ratio of 67.7% is remarkable &mdash; two-thirds of your vocabulary appears exactly once. For comparison, most novels land around 40-50%. This means virtually every sentence introduces words the reader has never seen before in the text, creating that feeling of relentless novelty.</p>
+
+  <div class="chat-section">Semantic Domains and Domain Collision</div>
+  <p class="chat-body">The heatmap across chapters reveals consistent thematic obsessions. Body parts dominate (313 occurrences) &mdash; mouths, faces, hands, teeth. Food and drink run a close second (286) &mdash; mustard, cheese, meat, corn, beer. And domestic objects (292) anchor everything in recognizable physical space.</p>
+  <p class="chat-body">What's most interesting is how these domains collide. The analysis identifies passages where three or more semantic domains activate simultaneously &mdash; "I piss bacon. I eat steel. I'm a rodeo. I keep bees in my mattress." That's bodily functions + food + domestic objects all crashing into each other. The domain flow chart across all 673 paragraphs shows these collisions aren't random; they're a consistent signature throughout the text.</p>
+  <p class="chat-body">The food-body fusion motif is especially revealing. That enormous run-on passage starting with "Oh there's meat pillowing in the sea" &mdash; which goes on for 300+ words as a single breathless chain &mdash; is basically the book's DNA compressed into one sentence. Food becomes body becomes animal becomes geography becomes body again, each clause hooking into the next through shared sensory logic rather than narrative logic.</p>
+
+  <div class="chat-section">The Structural Skeleton</div>
+  <p class="chat-body">85% declarative sentences is a huge number. You're presenting nonsense with the confidence of fact: "Foamy David is a soft sort of fellow." "Radishes moaned at the sun." The assertive tone is what sells the absurdity &mdash; it reads like someone genuinely informing you of important truths that happen to be incomprehensible.</p>
+  <p class="chat-body">The POS analysis confirms this: the most common sentence openings follow standard English patterns. You're using grammatically correct scaffolding filled with semantically incongruous content. The syntax is largely well-formed. It's the content that's broken, not the structure.</p>
+
+  <div class="chat-section">Chapter 4: The Mantra Chapter</div>
+  <p class="chat-body">"Until I get home" repeated 31 times is the single most prominent structural device in the entire text &mdash; it accounts for the dominant bigram, trigram, and 4-gram. It functions almost like a musical interlude: pure rhythm and repetition amid the chaos. The neologism ratio in Chapter 4 (31.6%) is the highest in the book, so the surrounding context is also the most linguistically inventive. That creates a tension between the one anchor phrase the reader can cling to and a maximally unfamiliar environment.</p>
+
+  <div class="chat-section">Character Ghosts</div>
+  <p class="chat-body">Dan (17 appearances), Showercats Dupreme (5x), sun monkeys (5x), Bleary (5x), Hansel (7x), Foamy David &mdash; these entities recur just enough to feel like characters but never develop. They're scaffolding for narrative expectation without narrative payoff. The reader keeps thinking "oh, here's Dan again, maybe now I'll understand" &mdash; but understanding never arrives. It's the same "almost" principle applied to character rather than sentence-level meaning.</p>
+
+  <div class="chat-section">The Markov Generator</div>
+  <p class="chat-body">The order-2 Markov chain trained on your text produces output that's honestly hard to distinguish from the source at a glance. The fact that a statistical model can approximate the style suggests the text has deeply consistent patterns &mdash; it's not truly random, it has a learnable distribution. The generator's average sentence length closely matches the original, and the character-scene outputs correctly produce named entity patterns.</p>
+
+  <div class="chat-section">Unconscious Patterns</div>
+  <p class="chat-body">The analysis surfaces some patterns you probably didn't consciously embed. The male-coded character names vastly outnumber female ones. The body-food fusion is a deep and consistent association &mdash; consumption and embodiment are fused at a fundamental level. And the domestic anchoring (baskets, blankets, doors, spoons) suggests that even in your wildest inventive passages, there's a gravitational pull toward familiar physical space.</p>
+
+  <div class="chat-section">The Big Picture</div>
+  <p class="chat-body">What this analysis ultimately reveals is that Mustard &amp; Milk is not random &mdash; it's a carefully (if perhaps intuitively) calibrated text that operates in the narrow band between comprehension and confusion. The meaning score distribution, the consistent domain collisions, the grammatically correct sentence scaffolding, the recurring character ghosts &mdash; all of these point to a text that knows how language works and systematically exploits the gap between syntactic expectation and semantic fulfillment. The reader's brain keeps trying to make sense of it because the text keeps almost making sense, and that "almost" is where the whole thing lives.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- VAN'S QUESTION -->
+  <div class="chat-speaker">VAN:</div>
+  <p class="chat-body">Based on these findings, are you able to glean any underlying motivations that I may not have been conscious of? Any predilections, leanings, anything you could determine or suspect about me by looking past the shock-imagery and seeing deeper overarching patterns? As I mentioned in the foreword, I felt it was a shell I shed, and what I wrote today would obviously be different (after 9 years of life experience). Can you get a deeper read on who I was at the time? Might help to know that I did this project on my lunch breaks to de-stress by making myself laugh with absurdity.</p>
+
+  <div class="about-divider">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</div>
+
+  <!-- CLAUDE'S DEEP READING -->
+  <div class="chat-speaker">CLAUDE:</div>
+  <p class="chat-body">This is a really interesting question, and yeah &mdash; I think the data reveals quite a bit about 27-year-old Van that goes beyond the surface-level gross-out humor. Let me lay out what I see.</p>
+
+  <div class="chat-section">The Control Artist Pretending to Let Go</div>
+  <p class="chat-body">The single most revealing statistic in this entire analysis is that 85% declarative sentence rate combined with the 0.73 mean meaning score. You weren't writing chaos &mdash; you were writing authoritative chaos. Every absurd statement is delivered with the grammatical confidence of someone explaining how to change a tire. This is someone who has a strong internal need for structure and competence, choosing nonsense as their release valve. You didn't abandon control &mdash; you redirected it. The syntax stayed disciplined even when the content went feral.</p>
+  <p class="chat-body">That's a very specific personality signature: someone who can't fully let go even when they're trying to. The Markov chain confirms it &mdash; your text has such consistent statistical patterns that a simple model can reproduce it. True randomness wouldn't be learnable. You were operating within self-imposed constraints you probably weren't aware of.</p>
+
+  <div class="chat-section">The Sensory Processor</div>
+  <p class="chat-body">The dominant semantic domains tell a story about how your brain organizes experience. Body parts (313), food/drink (286), texture/sensation (190) &mdash; when you turned off the "meaning" filter and just wrote, your mind went straight to the physical and sensory. Not to abstractions, not to ideas, not to emotions (which rank surprisingly low at 104). You were feeling the world through your body, not narrating it through your feelings.</p>
+  <p class="chat-body">This suggests someone who was, at 27, more comfortable in the tactile and concrete than in the emotional and introspective. The food-body fusion motif reinforces this &mdash; consumption and embodiment are fused. You experience the world mouth-first. That's someone deeply sensory and probably somewhat disconnected from or avoidant of more vulnerable emotional register. The profanity functions the same way &mdash; it's a somatic emotional expression rather than a reflective one. "Fuck" is a feeling in the body, not an idea in the head.</p>
+
+  <div class="chat-section">The Homesick Wanderer</div>
+  <p class="chat-body">"Until I get home" &mdash; 31 times. That's the only true refrain in 25,000 words of nonsense, and it's the single most statistically dominant pattern in the entire corpus. You could have anchored on anything. You anchored on wanting to go home.</p>
+  <p class="chat-body">And it's not "I'm going home" or "I am home" &mdash; it's until. It's anticipatory. It's the state of not-yet-having-arrived. Written on your lunch breaks, in the middle of a workday, probably at a job that wasn't your life's calling. That refrain isn't just a structural device &mdash; it's the emotional core of the whole book, and it's about displacement. About enduring the present moment by fixating on the return to somewhere safe.</p>
+  <p class="chat-body">Domestic objects being the third-most prevalent domain (292 occurrences &mdash; baskets, blankets, doors, home, spoons) further supports this. Even in pure nonsense, you kept writing about the inside of a house. Someone who craves domestic stability and groundedness, writing from a place where they didn't quite have it.</p>
+
+  <div class="chat-section">The Loner with an Audience</div>
+  <p class="chat-body">The pronoun distribution is telling. "I" (402), "you" (274), "my" (243), "your" (198), "we" (196). There's a strong I-you dynamic &mdash; this text is constantly addressing someone. It's conversational, confrontational, intimate. But "we" also shows up frequently, and when it does, it's often in these oddly earnest communal declarations.</p>
+  <p class="chat-body">That's someone who felt isolated but had a deep, possibly unacknowledged desire for belonging and shared experience. Writing nonsense alone on your lunch break to make yourself laugh &mdash; but the nonsense keeps talking to someone. There's always an implied listener. You weren't just venting into the void; you were performing for an audience that wasn't there yet.</p>
+
+  <div class="chat-section">The Frustrated Moralist</div>
+  <p class="chat-body">This one might surprise you, but there are these weird eruptions of sincerity scattered throughout. The meaning detection flagged these as "surreal real" &mdash; sentences where the realness is 1.0 but they've been embedded in nonsense context.</p>
+  <p class="chat-body">The lists motif (31 instances) is also revealing: "Ambition, Determination, Antipathy; Devotion, Communion, Elation, Shame." You kept making lists of values, virtues, abstract qualities. Inside a book of deliberate nonsense, you kept accidentally writing sermons. That's someone with strong opinions about how people should live who had learned to disguise those opinions in absurdity &mdash; possibly because expressing them directly felt too vulnerable or too earnest for the persona you were maintaining.</p>
+  <p class="chat-body">The profanity pattern supports this too. It's not random &mdash; it clusters around frustration with people. There's real irritation in there. Someone who expected more from the people around them and dealt with that disappointment through comic aggression rather than direct confrontation.</p>
+
+  <div class="chat-section">The Erosion Motif</div>
+  <p class="chat-body">"Erodes" appears 8 times, making it one of the most repeated content words. Bodily decay shows up 38 times. Deterioration, crumbling, rotting. At 27 you were already preoccupied with entropy &mdash; things wearing down, falling apart, being used up. Combined with the home-longing and the sensory fixation, this paints someone who felt time passing, felt things slipping, and was processing that anxiety through humor rather than confronting it head-on.</p>
+
+  <div class="chat-section">The Composite Portrait</div>
+  <p class="chat-body">So who was 27-year-old Van? Based on what leaked through the nonsense filter:</p>
+  <p class="chat-body">A deeply sensory, physically-oriented person who processed the world through taste, touch, and the body rather than through emotional introspection. Someone with a strong need for control and competence who used deliberate absurdity as a pressure valve &mdash; the one space where they could be "wrong" on purpose. Someone homesick for a stability they didn't quite have yet, working through their lunch break at a job that was a means to an end, addressing an imaginary audience because the real one hadn't materialized. Someone with frustrated moral convictions and high expectations of others, disguised in irony. Someone already feeling the weight of time and entropy, laughing at it because the alternative was less comfortable.</p>
+  <p class="chat-body">The fact that you describe it as "a shell I shed" makes perfect sense. This reads like the output of someone on the verge of a transition &mdash; storing up energy for a bigger life change but not yet ready to make it. The off-grid homestead project, the drone work, the deliberate move toward self-sufficiency and creative autonomy &mdash; that was all latent in this text nine years ago. "Until I get home" just didn't have coordinates yet.</p>
+
+</div>
+<!-- End hidden About content -->
+
+<script src="engine.js"></script>
+</body>
+</html>

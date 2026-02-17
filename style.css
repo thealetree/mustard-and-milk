@@ -1,0 +1,447 @@
+/* Mustard & Milk — Web Nonsense Generator */
+
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+  --fg-dim: #888888;
+  --fg-ghost: #333333;
+  --border: #ffffff;
+  --font: Helvetica, Arial, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+/* ── Header ─────────────────────────────────── */
+
+header {
+  padding: 18px 24px 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.title-link {
+  font-size: 40px;
+  font-weight: bold;
+  color: var(--fg);
+  text-decoration: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+.title-link:hover { color: var(--fg-dim); }
+
+.subtitle {
+  font-size: 18px;
+  color: var(--fg-dim);
+  letter-spacing: 1px;
+}
+
+.header-sep {
+  height: 1px;
+  background: var(--fg-ghost);
+  border: none;
+}
+
+/* ── Main Layout ────────────────────────────── */
+
+.main {
+  display: flex;
+  height: calc(100vh - 75px);
+}
+
+.left-panel {
+  width: 400px;
+  min-width: 400px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.vsep {
+  width: 1px;
+  background: var(--fg-ghost);
+}
+
+.right-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 30px;
+}
+
+/* ── Section Labels ─────────────────────────── */
+
+.section-label {
+  display: block;
+  font-size: 16px;
+  color: var(--fg-dim);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+/* ── Style Buttons ──────────────────────────── */
+
+.style-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.style-btn {
+  border: 2px solid var(--fg-ghost);
+  background: transparent;
+  color: var(--fg);
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s;
+}
+.style-btn:hover {
+  border-color: var(--fg-dim);
+}
+.style-btn.selected {
+  border-color: var(--fg);
+}
+.style-btn .style-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.style-btn .style-desc {
+  font-size: 16px;
+  color: var(--fg-dim);
+}
+
+/* ── Count Slider ───────────────────────────── */
+
+.count-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  background: var(--fg-ghost);
+  border-radius: 2px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--fg);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--fg);
+  cursor: pointer;
+  border: none;
+}
+
+.count-display {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--fg);
+  min-width: 40px;
+  text-align: center;
+}
+
+/* ── Primary Buttons ────────────────────────── */
+
+.btn-generate {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: var(--font);
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: opacity 0.15s;
+  margin-bottom: 8px;
+}
+.btn-generate:hover { opacity: 0.85; }
+.btn-generate:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn-clear {
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: var(--font);
+  background: transparent;
+  color: var(--fg-dim);
+  border: 2px solid var(--fg-ghost);
+  cursor: pointer;
+  letter-spacing: 1px;
+  display: none;
+}
+.btn-clear:hover {
+  border-color: var(--fg-dim);
+  color: var(--fg);
+}
+
+/* ── Bottom Controls (spacer + About) ───────── */
+
+.left-spacer { flex: 1; }
+
+.left-bottom {
+  padding-top: 16px;
+  border-top: 1px solid var(--fg-ghost);
+}
+
+.btn-about {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: var(--font);
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: opacity 0.15s;
+}
+.btn-about:hover { opacity: 0.85; }
+
+/* ── Output Area ────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+.empty-title {
+  font-size: 28px;
+  color: var(--fg-ghost);
+  margin-bottom: 12px;
+}
+.empty-teaser {
+  font-size: 18px;
+  color: var(--fg-ghost);
+  max-width: 500px;
+  line-height: 1.4;
+}
+
+.output-item {
+  margin-bottom: 4px;
+}
+.output-separator {
+  color: var(--fg-ghost);
+  font-size: 8px;
+  margin: 12px 0;
+  letter-spacing: 2px;
+}
+.output-style-label {
+  font-size: 16px;
+  color: var(--fg-dim);
+  margin-bottom: 4px;
+  padding-left: 4px;
+}
+.output-text {
+  font-size: 24px;
+  color: var(--fg);
+  line-height: 1.4;
+  padding: 4px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.output-text:hover { color: var(--fg-dim); }
+.output-text.copied {
+  color: var(--fg-dim);
+}
+
+/* ── Loading ────────────────────────────────── */
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 20px;
+  color: var(--fg-ghost);
+}
+
+/* ── About Section ──────────────────────────── */
+
+#about-content { display: none; }
+
+.about-heading {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--fg);
+  margin: 24px 0 8px;
+}
+.about-subheading {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--fg);
+  margin: 20px 0 4px;
+}
+.about-body {
+  font-size: 18px;
+  color: var(--fg-dim);
+  line-height: 1.5;
+  margin: 2px 0 6px 4px;
+}
+.about-quote {
+  font-size: 20px;
+  color: var(--fg);
+  line-height: 1.5;
+  margin: 10px 0 10px 30px;
+}
+.about-stat-label {
+  font-size: 16px;
+  color: var(--fg-ghost);
+  margin: 2px 0;
+}
+.about-stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--fg);
+}
+.about-stat-row {
+  margin: 2px 0 2px 8px;
+}
+.about-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--fg);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.about-link:hover { color: var(--fg-dim); }
+.about-divider {
+  color: var(--fg-ghost);
+  font-size: 8px;
+  margin: 10px 0;
+}
+.about-bar-full {
+  font-size: 14px;
+  color: var(--fg);
+  letter-spacing: -1px;
+}
+.about-bar-empty {
+  font-size: 14px;
+  color: var(--fg-ghost);
+  letter-spacing: -1px;
+}
+
+/* ── Chat Section ───────────────────────────── */
+
+.chat-speaker {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--fg);
+  margin: 16px 0 4px;
+}
+.chat-section {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--fg);
+  margin: 12px 0 4px 20px;
+}
+.chat-body {
+  font-size: 16px;
+  color: var(--fg-dim);
+  line-height: 1.5;
+  margin: 2px 0 4px 20px;
+}
+
+/* ── Domain Bar Row ─────────────────────────── */
+
+.domain-row {
+  margin-bottom: 12px;
+  margin-left: 8px;
+}
+.domain-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--fg);
+  margin-bottom: 2px;
+}
+.domain-examples {
+  font-size: 16px;
+  color: var(--fg-ghost);
+  margin-top: 2px;
+}
+
+/* Chapter row */
+.chapter-row {
+  margin: 2px 0 2px 8px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.chapter-label {
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+  color: var(--fg-ghost);
+  margin-right: 8px;
+}
+.chapter-pct {
+  color: var(--fg-ghost);
+  margin-left: 8px;
+}
+
+/* Sentence structure row */
+.struct-row {
+  margin: 4px 0 4px 8px;
+}
+.struct-label {
+  font-size: 16px;
+  color: var(--fg-ghost);
+  margin-bottom: 2px;
+}
+
+/* ── Responsive ─────────────────────────────── */
+
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+    height: auto;
+  }
+  html, body {
+    overflow: auto;
+  }
+  .left-panel {
+    width: 100%;
+    min-width: 0;
+    padding: 16px;
+  }
+  .vsep { display: none; }
+  .right-panel {
+    padding: 16px;
+    min-height: 60vh;
+  }
+  .title-link { font-size: 28px; }
+  .subtitle { font-size: 14px; }
+  .output-text { font-size: 18px; }
+  .left-spacer { display: none; }
+}
