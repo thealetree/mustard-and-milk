@@ -534,7 +534,8 @@ function buildChatElements(container) {
   if (chatMessages.length === 0) {
     const welcome = document.createElement('div');
     welcome.className = 'chat-welcome';
-    welcome.textContent = 'Say something. The machine will respond with nonsense seeded from your words.';
+    const teaser = generator ? generator.generateSentence(12, 1.1) : '';
+    welcome.textContent = teaser;
     history.appendChild(welcome);
   } else {
     chatMessages.forEach(msg => {
