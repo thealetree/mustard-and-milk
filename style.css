@@ -422,6 +422,30 @@ input[type="range"]::-moz-range-thumb {
 
 /* ── Responsive ─────────────────────────────── */
 
+/* iPad / Tablet portrait (769px–1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .left-panel {
+    width: 320px;
+    min-width: 320px;
+    padding: 16px 18px;
+  }
+  .left-spacer { flex: 0; }
+  .left-bottom { padding-top: 12px; }
+  .style-btn .style-name { font-size: 18px; }
+  .style-btn .style-desc { font-size: 14px; }
+  .style-btn { padding: 8px 12px; }
+  .style-buttons { gap: 4px; margin-bottom: 14px; }
+  .count-row { margin-bottom: 14px; }
+  .count-display { font-size: 26px; }
+  .btn-generate { font-size: 20px; padding: 12px 16px; }
+  .btn-about { font-size: 14px; padding: 12px 16px; }
+  .section-label { font-size: 14px; margin-bottom: 8px; }
+  .right-panel { padding: 20px 22px; }
+  .title-link { font-size: 32px; }
+  .subtitle { font-size: 15px; }
+}
+
+/* Phone (≤768px) */
 @media (max-width: 768px) {
   .main {
     flex-direction: column;
