@@ -445,6 +445,20 @@ input[type="range"]::-moz-range-thumb {
   .subtitle { font-size: 15px; }
 }
 
+/* iPad landscape / short viewport (wide but ≤ 850px tall) */
+@media (min-width: 1025px) and (max-height: 850px) {
+  .left-spacer { flex: 0; }
+  .left-bottom { padding-top: 10px; }
+  .style-btn .style-name { font-size: 19px; }
+  .style-btn .style-desc { font-size: 14px; }
+  .style-btn { padding: 8px 12px; }
+  .style-buttons { gap: 4px; margin-bottom: 14px; }
+  .count-row { margin-bottom: 14px; }
+  .btn-generate { padding: 12px 16px; }
+  .btn-about { padding: 12px 16px; }
+  .section-label { margin-bottom: 8px; }
+}
+
 /* Phone (≤768px) */
 @media (max-width: 768px) {
   .main {
