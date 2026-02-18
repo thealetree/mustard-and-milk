@@ -420,6 +420,88 @@ input[type="range"]::-moz-range-thumb {
   margin-bottom: 2px;
 }
 
+/* ── Chat Mode ─────────────────────────────── */
+
+.chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 16px;
+}
+
+.chat-welcome {
+  font-size: 20px;
+  color: var(--fg-ghost);
+  text-align: center;
+  padding: 60px 20px;
+  line-height: 1.5;
+}
+
+.chat-bubble {
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  line-height: 1.5;
+  max-width: 85%;
+}
+
+.chat-user {
+  font-size: 16px;
+  color: var(--fg-dim);
+  border-left: 3px solid var(--fg-ghost);
+  padding-left: 12px;
+  margin-left: 0;
+}
+
+.chat-machine {
+  font-size: 22px;
+  color: var(--fg);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.chat-machine:hover { color: var(--fg-dim); }
+.chat-machine.copied { color: var(--fg-dim); }
+
+.chat-input-row {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--fg-ghost);
+  padding-top: 12px;
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  background: transparent;
+  border: 2px solid var(--fg-ghost);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 18px;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.chat-input:focus { border-color: var(--fg-dim); }
+.chat-input::placeholder { color: var(--fg-ghost); }
+
+.chat-send {
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: opacity 0.15s;
+}
+.chat-send:hover { opacity: 0.85; }
+
+/* Make right panel flex column when chat is active */
+.right-panel:has(.chat-history) {
+  display: flex;
+  flex-direction: column;
+}
+
 /* ── Responsive ─────────────────────────────── */
 
 /* iPad / Tablet portrait (769px–1024px) */
@@ -487,4 +569,7 @@ input[type="range"]::-moz-range-thumb {
   .subtitle { font-size: 14px; }
   .output-text { font-size: 18px; }
   .left-spacer { display: none; }
+  .chat-machine { font-size: 18px; }
+  .chat-input { font-size: 16px; padding: 10px 12px; }
+  .chat-send { padding: 10px 16px; font-size: 14px; }
 }

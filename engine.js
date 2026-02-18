@@ -90,6 +90,163 @@ class MustardMilkGenerator {
     return text;
   }
 
+  // Generate a sentence seeded from a specific word (used by chat mode)
+  generateSeeded(seedWord, maxWords = 30, temperature = 1.0) {
+    const word = seedWord.toLowerCase();
+
+    // Try to find a starter containing the seed word
+    for (let i = 0; i < this.starters.length; i++) {
+      if (this.starters[i][0] === word || this.starters[i][1] === word) {
+        const result = [...this.starters[i]];
+        const targetLen = this.lengths[Math.floor(Math.random() * this.lengths.length)] || 12;
+        const endPunc = new Set(['.', '!', '?', '\u2026']);
+        const limit = Math.min(maxWords, targetLen);
+        for (let j = 0; j < limit; j++) {
+          let nextWord = null;
+          const ctx2 = result.slice(-2).join('|');
+          if (this.c2[ctx2]) {
+            nextWord = this._pickFromOptions(this.c2[ctx2], temperature);
+          } else {
+            const ctx1 = result[result.length - 1];
+            if (this.c1[ctx1]) nextWord = this._pickFromOptions(this.c1[ctx1], temperature);
+          }
+          if (nextWord === null) break;
+          result.push(nextWord);
+          if (endPunc.has(nextWord)) break;
+        }
+        return this._formatSentence(result);
+      }
+    }
+
+    // Try order-1 chain: find a context where the word leads somewhere
+    if (this.c1[word]) {
+      const nextWord = this._pickFromOptions(this.c1[word], temperature);
+      const result = [word, nextWord];
+      const targetLen = this.lengths[Math.floor(Math.random() * this.lengths.length)] || 12;
+      const endPunc = new Set(['.', '!', '?', '\u2026']);
+      const limit = Math.min(maxWords, targetLen);
+      for (let j = 0; j < limit; j++) {
+        let nw = null;
+        const ctx2 = result.slice(-2).join('|');
+        if (this.c2[ctx2]) {
+          nw = this._pickFromOptions(this.c2[ctx2], temperature);
+        } else {
+          const ctx1 = result[result.length - 1];
+          if (this.c1[ctx1]) nw = this._pickFromOptions(this.c1[ctx1], temperature);
+        }
+        if (nw === null) break;
+        result.push(nw);
+        if (endPunc.has(nw)) break;
+      }
+      return this._formatSentence(result);
+    }
+
+    // No match — fall back to normal generation
+    return this.generateSentence(maxWords, temperature);
+  }
+
+  _formatSentence(result) {
+    let text = result.join(' ');
+    if (text.length > 0) text = text[0].toUpperCase() + text.slice(1);
+    for (const p of '.!?,;:\u2026') text = text.split(' ' + p).join(p);
+    text = text.replace(/\b(ain|aren|can|couldn|didn|doesn|don|hasn|haven|isn|mustn|shouldn|wasn|weren|won|wouldn) t\b/g, "$1't");
+    text = text.replace(/\b(\w+) s\b/g, "$1's");
+    text = text.replace(/\b(\w+) ve\b/g, "$1've");
+    text = text.replace(/\b(\w+) re\b/g, "$1're");
+    text = text.replace(/\b(\w+) ll\b/g, "$1'll");
+    text = text.replace(/\b(\w+) d\b/g, "$1'd");
+    text = text.replace(/\b[Ii] m\b/g, "I'm");
+    if (text.length > 0 && !'.!?\u2026'.includes(text[text.length - 1])) text += '.';
+    return text;
+  }
+
+  // Chat response: extract user words, seed generation, match prompt style
+  generateChatResponse(userMessage) {
+    const STOP_WORDS = new Set([
+      'i', 'me', 'my', 'you', 'your', 'we', 'our', 'they', 'them', 'their',
+      'he', 'she', 'it', 'his', 'her', 'its', 'a', 'an', 'the', 'is', 'are',
+      'was', 'were', 'be', 'been', 'am', 'do', 'does', 'did', 'have', 'has',
+      'had', 'will', 'would', 'could', 'should', 'can', 'may', 'might',
+      'shall', 'to', 'of', 'in', 'for', 'on', 'with', 'at', 'by', 'from',
+      'as', 'into', 'about', 'that', 'this', 'what', 'which', 'who', 'whom',
+      'how', 'when', 'where', 'why', 'if', 'then', 'than', 'so', 'but',
+      'and', 'or', 'not', 'no', 'yes', 'just', 'also', 'very', 'too',
+      'really', 'much', 'more', 'most', 'some', 'any', 'all', 'each',
+      'every', 'both', 'few', 'many', 'up', 'out', 'there', 'here',
+      'tell', 'think', 'know', 'like', 'want', 'need', 'get', 'got',
+      'make', 'going', 'go', 'come', 'say', 'said', 'thing', 'things',
+      'don', 'doesn', 'didn', 'won', 'wouldn', 'couldn', 'shouldn'
+    ]);
+
+    const NAMES = [
+      'Cheddarowe-Supreme', 'Nevada Joe', 'Foamy David',
+      'Uncle Toadhammer', 'Conejo Rob', 'Peach Lester',
+      'Magpie', 'Showercats Dupreme', 'Brown Mustard David'
+    ];
+
+    // Extract content words from the user's message
+    const words = userMessage.toLowerCase().replace(/[^a-z\s'-]/g, '').split(/\s+/).filter(w => w.length > 2);
+    const contentWords = words.filter(w => !STOP_WORDS.has(w));
+
+    // Detect prompt type
+    const trimmed = userMessage.trim();
+    const isQuestion = trimmed.endsWith('?');
+    const isExclamation = trimmed.endsWith('!');
+    const isCommand = /^(tell|show|give|make|describe|explain|help|do|say)\b/i.test(trimmed);
+    const isGreeting = /^(hi|hello|hey|yo|sup|greetings|howdy)\b/i.test(trimmed);
+
+    // Find which content words exist in the chain
+    const seedable = [];
+    for (const w of contentWords) {
+      if (this.c1[w]) seedable.push(w);
+    }
+    // Shuffle so we don't always seed from the same word
+    for (let i = seedable.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [seedable[i], seedable[j]] = [seedable[j], seedable[i]];
+    }
+
+    const sents = [];
+
+    if (isGreeting) {
+      // Greetings get a character introduction
+      const name = NAMES[Math.floor(Math.random() * NAMES.length)];
+      const s1 = seedable.length > 0
+        ? this.generateSeeded(seedable[0], 15)
+        : this.generateSentence(15);
+      const s2 = this.generateSentence(12);
+      sents.push(name + ' says: ' + s1 + ' ' + s2);
+    } else if (isQuestion) {
+      // Questions get confident declarations
+      const count = 3 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < count; i++) {
+        const seed = seedable[i % Math.max(seedable.length, 1)];
+        const s = seed ? this.generateSeeded(seed, 20, 0.9) : this.generateSentence(20, 0.9);
+        sents.push(s);
+      }
+    } else if (isCommand || isExclamation) {
+      // Commands/exclamations get a list rant seeded from their words
+      const count = 4 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < count; i++) {
+        const seed = seedable[i % Math.max(seedable.length, 1)];
+        const s = seed ? this.generateSeeded(seed, 8, 0.8) : this.generateSentence(8, 0.8);
+        sents.push(s);
+      }
+    } else {
+      // Statements get a mixed response with seeded + free sentences
+      const count = 3 + Math.floor(Math.random() * 4);
+      for (let i = 0; i < count; i++) {
+        if (i < seedable.length) {
+          sents.push(this.generateSeeded(seedable[i], 25));
+        } else {
+          sents.push(this.generateSentence(25));
+        }
+      }
+    }
+
+    return sents.join(' ');
+  }
+
   generateStyled(style = 'mixed', count = 3) {
     const NAMES = [
       'Cheddarowe-Supreme', 'Nevada Joe', 'Foamy David',
@@ -158,6 +315,7 @@ const STYLES = [
   { id: 'question_barrage', name: 'Question Barrage', desc: 'Rhetorical nonsense questions' },
   { id: 'character_scene', name: 'Character Scene', desc: 'Named character micro-narratives' },
   { id: 'refrain', name: 'Refrain', desc: 'Build-up with repeated anchors' },
+  { id: 'chat', name: 'Chat', desc: 'Talk to the nonsense machine' },
 ];
 
 
@@ -166,7 +324,9 @@ const STYLES = [
 let generator = null;
 let currentStyle = 'mixed';
 let outputs = []; // [{style, styleName, text}, ...]
+let chatMessages = []; // [{role: 'user'|'machine', text}]
 let showingAbout = false;
+let chatMode = false;
 
 function init() {
   // Show loading
@@ -194,6 +354,7 @@ function init() {
       currentStyle = btn.dataset.style;
       document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+      setChatMode(currentStyle === 'chat');
     });
   });
 
@@ -209,9 +370,9 @@ function init() {
   document.getElementById('btn-clear').addEventListener('click', clearAll);
   document.getElementById('btn-about').addEventListener('click', toggleAbout);
 
-  // Keyboard shortcut
+  // Keyboard shortcut (not in chat mode)
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.target.matches('input, textarea, button')) {
+    if (e.key === 'Enter' && !chatMode && !e.target.matches('input, textarea, button')) {
       e.preventDefault();
       generate();
     }
@@ -317,6 +478,121 @@ function toggleAbout() {
   const aboutContent = document.getElementById('about-content');
   outputEl.innerHTML = aboutContent.innerHTML;
   outputEl.scrollTop = 0;
+}
+
+// ── Chat Mode ────────────────────────────────────────────────
+
+function setChatMode(enabled) {
+  chatMode = enabled;
+  const samplesLabel = document.querySelector('.section-label:nth-of-type(2)');
+  const countRow = document.querySelector('.count-row');
+  const genBtn = document.getElementById('btn-generate');
+  const clearBtn = document.getElementById('btn-clear');
+
+  // Find the SAMPLES label (second .section-label in left-panel)
+  const labels = document.querySelectorAll('.left-panel .section-label');
+  const samplesEl = labels.length > 1 ? labels[1] : null;
+
+  if (enabled) {
+    // Hide generate controls
+    if (samplesEl) samplesEl.style.display = 'none';
+    countRow.style.display = 'none';
+    genBtn.style.display = 'none';
+    clearBtn.style.display = 'none';
+    showingAbout = false;
+    showChatUI();
+  } else {
+    // Restore generate controls
+    if (samplesEl) samplesEl.style.display = '';
+    countRow.style.display = '';
+    genBtn.style.display = '';
+    clearBtn.style.display = outputs.length > 0 ? 'block' : 'none';
+    // Restore output panel
+    if (outputs.length > 0) {
+      renderOutputs();
+    } else {
+      showEmpty();
+    }
+  }
+}
+
+function showChatUI() {
+  const outputEl = document.getElementById('output');
+  outputEl.innerHTML = '';
+
+  // Chat history area
+  const history = document.createElement('div');
+  history.id = 'chat-history';
+  history.className = 'chat-history';
+
+  // Welcome message
+  if (chatMessages.length === 0) {
+    const welcome = document.createElement('div');
+    welcome.className = 'chat-welcome';
+    welcome.textContent = 'Say something. The machine will respond with nonsense seeded from your words.';
+    history.appendChild(welcome);
+  } else {
+    chatMessages.forEach(msg => {
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble chat-' + msg.role;
+      bubble.textContent = msg.text;
+      if (msg.role === 'machine') {
+        bubble.title = 'Click to copy';
+        bubble.addEventListener('click', () => copyText(bubble, msg.text));
+      }
+      history.appendChild(bubble);
+    });
+  }
+
+  // Input row
+  const inputRow = document.createElement('div');
+  inputRow.className = 'chat-input-row';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'chat-input';
+  input.className = 'chat-input';
+  input.placeholder = 'Type something...';
+  input.autocomplete = 'off';
+
+  const sendBtn = document.createElement('button');
+  sendBtn.className = 'chat-send';
+  sendBtn.textContent = 'SEND';
+  sendBtn.addEventListener('click', sendChat);
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendChat();
+    }
+  });
+
+  inputRow.appendChild(input);
+  inputRow.appendChild(sendBtn);
+
+  outputEl.appendChild(history);
+  outputEl.appendChild(inputRow);
+
+  // Scroll to bottom and focus input
+  history.scrollTop = history.scrollHeight;
+  setTimeout(() => input.focus(), 50);
+}
+
+function sendChat() {
+  if (!generator || !chatMode) return;
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // Add user message
+  chatMessages.push({ role: 'user', text: text });
+
+  // Generate response
+  const response = generator.generateChatResponse(text);
+  chatMessages.push({ role: 'machine', text: response });
+
+  // Re-render
+  showChatUI();
 }
 
 function escapeHTML(str) {
