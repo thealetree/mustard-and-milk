@@ -482,12 +482,16 @@ function toggleAbout() {
 
 // ── Chat Mode ────────────────────────────────────────────────
 
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
 function setChatMode(enabled) {
   chatMode = enabled;
-  const samplesLabel = document.querySelector('.section-label:nth-of-type(2)');
   const countRow = document.querySelector('.count-row');
   const genBtn = document.getElementById('btn-generate');
   const clearBtn = document.getElementById('btn-clear');
+  const mobileChat = document.getElementById('mobile-chat');
 
   // Find the SAMPLES label (second .section-label in left-panel)
   const labels = document.querySelectorAll('.left-panel .section-label');
@@ -507,6 +511,9 @@ function setChatMode(enabled) {
     countRow.style.display = '';
     genBtn.style.display = '';
     clearBtn.style.display = outputs.length > 0 ? 'block' : 'none';
+    // Clear mobile chat container
+    mobileChat.innerHTML = '';
+    mobileChat.style.display = 'none';
     // Restore output panel
     if (outputs.length > 0) {
       renderOutputs();
@@ -516,16 +523,14 @@ function setChatMode(enabled) {
   }
 }
 
-function showChatUI() {
-  const outputEl = document.getElementById('output');
-  outputEl.innerHTML = '';
+function buildChatElements(container) {
+  container.innerHTML = '';
 
   // Chat history area
   const history = document.createElement('div');
   history.id = 'chat-history';
   history.className = 'chat-history';
 
-  // Welcome message
   if (chatMessages.length === 0) {
     const welcome = document.createElement('div');
     welcome.className = 'chat-welcome';
@@ -570,12 +575,31 @@ function showChatUI() {
   inputRow.appendChild(input);
   inputRow.appendChild(sendBtn);
 
-  outputEl.appendChild(history);
-  outputEl.appendChild(inputRow);
+  container.appendChild(history);
+  container.appendChild(inputRow);
 
   // Scroll to bottom and focus input
   history.scrollTop = history.scrollHeight;
   setTimeout(() => input.focus(), 50);
+}
+
+function showChatUI() {
+  if (isMobile()) {
+    // On mobile: render chat inline in the left panel
+    const mobileChat = document.getElementById('mobile-chat');
+    mobileChat.style.display = 'block';
+    buildChatElements(mobileChat);
+    // Clear right panel
+    const outputEl = document.getElementById('output');
+    outputEl.innerHTML = '';
+  } else {
+    // On desktop: render chat in the right panel
+    const mobileChat = document.getElementById('mobile-chat');
+    mobileChat.innerHTML = '';
+    mobileChat.style.display = 'none';
+    const outputEl = document.getElementById('output');
+    buildChatElements(outputEl);
+  }
 }
 
 function sendChat() {
